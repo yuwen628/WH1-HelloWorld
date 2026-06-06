@@ -1,5 +1,5 @@
 
-Demo Website: https://tcnr-12.github.io/WH1-HelloWorld/
+Demo Website: https://yuwen628.github.io/WH1-HelloWorld/
 
 # Hollow World 🌌
 
@@ -18,7 +18,7 @@ No build step or installations required!
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/tcnr-12/WH1-HelloWorld.git
+   git clone https://github.com/yuwen628/WH1-HelloWorld.git
    ```
 2. Navigate into the project folder:
    ```bash
