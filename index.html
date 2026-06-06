@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="A premium and beautiful demonstration of hollow typography with modern glassmorphism.">
+  <title>Hollow World</title>
+
+  <!-- Preconnect and import premium google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;900&display=swap" rel="stylesheet">
+
+  <!-- Style Sheet -->
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+  <!-- Background visual elements -->
+  <div class="bg-gradient"></div>
+  <div class="bg-grid"></div>
+  <div class="particles" id="particles-container"></div>
+
+  <!-- Main interactive page container -->
+  <main class="container">
+    <section class="card" id="interactive-card">
+      <div class="title-container">
+        <h1 class="hollow-title" id="main-title">Hollow World!</h1>
+      </div>
+      <p class="subtitle" id="subtitle-desc">A glimpse into the digital void</p>
+
+      <div class="visitor-info">
+        <div class="info-row">
+          <span class="info-label">Developer</span>
+          <span class="info-value">Huang Yu Wen</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Current Date</span>
+          <span class="info-value" id="current-date">--/--/----</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Current Time</span>
+          <span class="info-value" id="current-time">--:--:--</span>
+        </div>
+      </div>
+
+      <button class="btn" id="interact-btn">Explore the void</button>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('particles-container');
+      const card = document.getElementById('interactive-card');
+      const button = document.getElementById('interact-btn');
+
+      // Dynamic Particle Generation
+      const particleCount = 20;
+      for (let i = 0; i < particleCount; i++) {
+        createParticle(false);
+      }
+
+      function createParticle(burst = false) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+
+        const size = Math.random() * 5 + 2;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        const left = Math.random() * 100;
+        particle.style.left = `${left}%`;
+
+        const delay = Math.random() * 15;
+        particle.style.animationDelay = `${burst ? 0 : delay}s`;
+
+        const duration = Math.random() * 10 + 10;
+        particle.style.animationDuration = `${duration}s`;
+
+        // Random slight color variants
+        const colors = [
+          'rgba(147, 51, 234, 0.4)', // Purple glow
+          'rgba(59, 130, 246, 0.4)',  // Blue glow
+          'rgba(255, 255, 255, 0.2)'  // White
+        ];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        container.appendChild(particle);
+
+        // Remove particle after animation completes to avoid memory leaks
+        setTimeout(() => {
+          particle.remove();
+          if (!burst) {
+            createParticle(false);
+          }
+        }, (duration + (burst ? 0 : delay)) * 1000);
+      }
+
+      // Add a slight interactive tilt effect to the card
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - (rect.width / 2);
+        const y = e.clientY - rect.top - (rect.height / 2);
+
+        // Calculate tilt
+        const tiltX = (y / (rect.height / 2)) * -5; // Max 5 deg tilt
+        const tiltY = (x / (rect.width / 2)) * 5;
+
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-5px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
+
+      // Interactive button click effect: burst particles
+      button.addEventListener('click', () => {
+        for (let i = 0; i < 15; i++) {
+          createParticle(true);
+        }
+
+        // Dynamic ripple effect or flash on subtitle
+        const subtitle = document.getElementById('subtitle-desc');
+        subtitle.style.transition = 'color 0.1s ease';
+        subtitle.style.color = '#ffffff';
+        setTimeout(() => {
+          subtitle.style.transition = 'color 1s ease';
+          subtitle.style.color = 'var(--text-muted)';
+        }, 150);
+      });
+
+      // Dynamic Date and Time updates
+      const dateEl = document.getElementById('current-date');
+      const timeEl = document.getElementById('current-time');
+
+      function updateClock() {
+        const now = new Date();
+        
+        // Format Date (e.g., Friday, June 5, 2026)
+        const dateOptions = { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        };
+        dateEl.textContent = now.toLocaleDateString('en-US', dateOptions);
+
+        // Format Time (e.g., 10:42:37 AM)
+        const timeOptions = {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        };
+        timeEl.textContent = now.toLocaleTimeString('en-US', timeOptions);
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    });
+  </script>
+</body>
+
+</html>

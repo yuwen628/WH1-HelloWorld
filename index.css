@@ -1,0 +1,305 @@
+/* Reset and Variable Definitions */
+:root {
+  --bg-color: #0b0d17;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f3f4f6;
+  --text-muted: #9ca3af;
+  --glow-color: rgba(147, 51, 234, 0.5); /* Purple */
+  --glow-color-alt: rgba(59, 130, 246, 0.5); /* Blue */
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Background Effects */
+.bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(147, 51, 234, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+  z-index: 1;
+}
+
+.bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center;
+  z-index: 2;
+  mask-image: radial-gradient(circle, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle, black 40%, transparent 80%);
+}
+
+/* Main Container */
+.container {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  max-width: 600px;
+}
+
+/* Glassmorphic Card */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: 0.8s;
+  pointer-events: none;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+/* Typography & Visual Effects */
+.title-container {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.hollow-title {
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.6);
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  transition: -webkit-text-stroke 0.4s ease, filter 0.4s ease;
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse Glow Effect */
+.hollow-title::after {
+  content: 'Hollow World!';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  -webkit-text-stroke: 1.5px transparent;
+  text-shadow: 0 0 20px var(--glow-color);
+  opacity: 0.5;
+  z-index: -1;
+  animation: glow-pulse 3s ease-in-out infinite alternate;
+}
+
+.card:hover .hollow-title {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0 0 15px var(--glow-color-alt));
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+/* Button & Interactive Elements */
+.btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-color);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes glow-pulse {
+  0% {
+    text-shadow: 0 0 10px var(--glow-color);
+    opacity: 0.3;
+  }
+  100% {
+    text-shadow: 0 0 25px var(--glow-color-alt);
+    opacity: 0.7;
+  }
+}
+
+/* Particle Overlay */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  animation: fly 15s linear infinite;
+  opacity: 0;
+}
+
+@keyframes fly {
+  0% {
+    transform: translateY(100vh) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .hollow-title {
+    font-size: 3rem;
+  }
+  .card {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+/* Visitor Information Section */
+.visitor-info {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.visitor-info:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(147, 51, 234, 0.15);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.info-label {
+  color: var(--text-muted);
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.8rem;
+}
+
+.info-value {
+  color: var(--text-primary);
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+#current-time {
+  color: #6ee7b7;
+  text-shadow: 0 0 10px rgba(110, 231, 183, 0.4);
+}
